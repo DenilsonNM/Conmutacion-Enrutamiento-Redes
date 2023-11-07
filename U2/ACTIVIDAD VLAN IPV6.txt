@@ -1,0 +1,22 @@
+vlan sw-2
+vlan 10 blanca fa0/1-15
+vlan 20 negra fa0/16-20
+vlan 30 verde fa0/21-24
+trunk 2 gi
+
+vlan sw-1
+vlan 10 alumnos fa0/1-5
+vlan 20 maestros fa0/6-10
+vlan 30 administrativo fa0/11-20
+trunk 2 gi
+
+vlan 10 2000-ACAD-CAFE-F0C0::/64
+vlan 10 2010-ACAD-CAFE-F0C0::/64
+vlan 10 2020-ACAD-CAFE-F0C0::/64
+
+
+vlan nativa 10.20.20.0/29
+
+mascara 29: 255.255.255.248
+ambito 10.20.20.1--10.20.20.6
+link local FE80::10

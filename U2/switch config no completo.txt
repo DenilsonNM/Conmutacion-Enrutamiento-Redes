@@ -1,0 +1,204 @@
+SW-SSH(config-line)#login local
+SW-SSH(config-line)#exit
+SW-SSH(config)#ip ssh version 2
+SW-SSH(config)#exit
+SW-SSH#
+%SYS-5-CONFIG_I: Configured from console by console
+
+SW-SSH#exit
+
+
+
+
+
+
+
+
+
+SW-SSH con0 is now available
+
+
+
+
+
+
+Press RETURN to get started.
+
+
+
+
+
+
+
+
+
+
+
+
+
+SW-SSH>en
+SW-SSH#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW-SSH(config)#sh run
+                ^
+% Invalid input detected at '^' marker.
+	
+SW-SSH(config)#exit
+SW-SSH#
+%SYS-5-CONFIG_I: Configured from console by console
+sh run
+Building configuration...
+
+Current configuration : 1250 bytes
+!
+version 15.0
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname SW-SSH
+!
+!
+!
+ip ssh version 2
+ip domain-name cisco.com
+!
+username admin secret 5 $1$mERr$Bok4KDfVutXOJolNq009M/
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+!
+interface FastEthernet0/1
+!
+interface FastEthernet0/2
+!
+interface FastEthernet0/3
+!
+interface FastEthernet0/4
+!
+interface FastEthernet0/5
+!
+interface FastEthernet0/6
+!
+interface FastEthernet0/7
+!
+interface FastEthernet0/8
+!
+interface FastEthernet0/9
+!
+interface FastEthernet0/10
+!
+interface FastEthernet0/11
+!
+interface FastEthernet0/12
+!
+interface FastEthernet0/13
+!
+interface FastEthernet0/14
+!
+interface FastEthernet0/15
+!
+interface FastEthernet0/16
+!
+interface FastEthernet0/17
+!
+interface FastEthernet0/18
+!
+interface FastEthernet0/19
+!
+interface FastEthernet0/20
+!
+interface FastEthernet0/21
+!
+interface FastEthernet0/22
+!
+interface FastEthernet0/23
+!
+interface FastEthernet0/24
+!
+interface GigabitEthernet0/1
+!
+interface GigabitEthernet0/2
+!
+interface Vlan1
+ ip address 192.168.100.254 255.255.255.0
+!
+!
+!
+!
+line con 0
+!
+line vty 0 4
+ login local
+ transport input ssh
+line vty 5 15
+ login local
+ transport input ssh
+!
+!
+!
+!
+end
+
+
+SW-SSH#
+SW-SSH#
+SW-SSH#
+SW-SSH#
+SW-SSH#
+SW-SSH#
+SW-SSH#
+SW-SSH#
+SW-SSH#username deni secret 5
+                ^
+% Invalid input detected at '^' marker.
+	
+SW-SSH#config t
+Enter configuration commands, one per line.  End with CNTL/Z.
+SW-SSH(config)#username deni secret 5
+% Incomplete command.
+SW-SSH(config)#username gato2 priv 15 secret class
+SW-SSH(config)#
+SW-SSH(config)#int fas02
+                        ^
+% Invalid input detected at '^' marker.
+	
+SW-SSH(config)#int fa/02
+                     ^
+% Invalid input detected at '^' marker.
+	
+SW-SSH(config)#int fa/2
+                     ^
+% Invalid input detected at '^' marker.
+	
+SW-SSH(config)#int fa 0/2
+SW-SSH(config-if)#switchport mode access
+SW-SSH(config-if)#switchport port-security
+SW-SSH(config-if)#switchport port-security maximum 1
+SW-SSH(config-if)#switchport port-security mac-address sticky
+SW-SSH(config-if)#switchport port-security violation shutdowm
+                                                            ^
+% Invalid input detected at '^' marker.
+	
+SW-SSH(config-if)#switchport port-security violation shutdown
+SW-SSH(config-if)#
+%LINK-5-CHANGED: Interface FastEthernet0/2, changed state to up
+
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/2, changed state to up
+
+SW-SSH(config-if)#exit
+SW-SSH(config)#sh port-security fa 0/2
+                ^
+% Invalid input detected at '^' marker.
+	
+SW-SSH(config)#show port-security fa 0/2
+                ^
+% Invalid input detected at '^' marker.
+	
+SW-SSH(config)#show port-security fa0/2
+                ^
+% Invalid input detected at '^' marker.
+	
+SW-SSH(config)#show port-security fa0/2

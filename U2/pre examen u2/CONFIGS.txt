@@ -1,0 +1,101 @@
+conf t
+hostname SW-LOCAL
+enable password Class
+line con 0
+password Cisco
+login
+no shu
+exit
+exit
+w
+conf t
+service password-encryption
+banner motd "Solo acceso autorizado"
+enable secret class
+ip domain-name Local.com
+crypro key generate rsa
+crypto key generate rsa
+username admin-001 secret Local00
+line vty 0 15
+transport input ssh
+login local
+exit
+ip ssh version 2
+int range f0/10-24
+shutdown
+exit
+int f0/1
+sw port-security
+sw port-security maximum 3
+sw port-security mac-address sticky
+sw port-security mac-address sticky 00E0.8F3D.EE3D
+sw port-security violation restrict
+exit
+int f0/2
+sw port-security
+sw port-security maximum 3
+sw port-security mac-address sticky
+sw port-security mac-address sticky 0010.11C2.6211
+sw port-security violation restrict
+exit
+int f0/4
+sw port-security
+sw port-security maximum 3
+sw port-security mac-address sticky
+sw port-security mac-address sticky 0000.0C52.56BD
+sw port-security violation restrict
+exit
+int f0/6
+sw port-security
+sw port-security maximum 3
+sw port-security mac-address sticky
+sw port-security mac-address sticky 0060.70D2.4BDB
+sw port-security violation restrict
+exit
+-----------------------------------------------------------------------------
+Conf t
+hostname RT-local
+int s0/1/0
+ip add 10.0.0.1 255.255.255.252
+no sh
+int s0/1/1
+ip add 10.10.0.1 255.255.255.0
+no sh
+ipv6 add 2010:db8:acad:2::1/126
+ipv6 add Fe80::1 link-local
+no sh
+exit
+ipv6 unicast-routing
+int gi0/0/0
+ip add 172.16.10.254 255.255.255.0
+no sh
+ipv6 add 2010:db8:acad:222::100/64
+ipv6 add Fe80::1 link-local
+no sh
+exit
+router rip
+end
+conf t
+ip route 0.0.0.0 0.0.0.0 10.0.0.2
+ipv6 route ::/0 2010:db8:acad:2::/126
+ipv6 route ::/0 2010:db8:acad:2::2
+enable password Class
+line con 0
+password Cisco
+login
+no shu
+exit
+service password-encryption
+banner motd "Solo acceso autorizado"
+enable secret class
+ip route 192.168.100.0 255.255.255.0 10.10.0.2
+ipv6 route 2010:DB8:ACAD:1::/126 2010:DB8:ACAD:2::2
+ip domain-name Local.com
+crypto key generate rsa
+username admin-001 secret Local00
+line vty 0 15
+transport input ssh
+login local
+exit
+ip ssh version 2
+

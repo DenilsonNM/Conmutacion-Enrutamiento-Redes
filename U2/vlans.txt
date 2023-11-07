@@ -1,0 +1,24 @@
+router
+220.34.128.254
+2021:db8:c0c0:cafe::ff
+link local fe80:1
+
+vlan default = 90 ;una vlan al azar para seguridad
+
+
+router ipv6 y ivp4
+server
+pc
+vlans
+asignar las vlans a las interfaces
+y la gigabit a truncal
+sw trunk native vlan 90, hace que la 90 sea la defaul vlan
+conetas los cables en sus interfaces
+le ponemos ip nueva a la 90
+en el router poner la ip de cada lan con gi0/0/0.10 para ipv6
+y encap dot1q 10 para ipv6
+lo mismo para ipv4
+y para la 90 se pone encap dot1q 90 native
+encender la red no sh
+conectar el cable gi de la 90
+hacer ping
