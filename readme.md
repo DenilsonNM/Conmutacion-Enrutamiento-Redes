@@ -2,7 +2,7 @@
 
 ## datos y puntos importantes
 - la ip config DNS asiga nombres a una direccion IP
-- Router SOHO- Small office/ Home office
+- Router SOHO = Small office/ Home office
 
 - una trama ethernet tiene 1518 octeto (8 bits), en la capa 2 y la otra trama es la iee 802.3 tambien con 1518
 - fastethernet le toma 9 microsegundos enviar 1518
