@@ -1,0 +1,101 @@
+# IPV4
+- SW: Switch
+- R1: Router 1
+## Comandos basicos
+mirar la configuracion del equipo
+```
+en
+sh run
+```
+Ingreso a configuracion de terminal.
+```
+en
+config t
+```
+Nombre del equipo anfitrion (por ejemplo un switch).
+```
+hostname SW-1
+```
+Acceder a una interfaz (puerto de conexion) por ejemplo vlan 1 de un switch, asignarle una **IPv4** y encender al puerto interfaz.
+- Red: 192.168.100.0/24
+```
+int vlan 1
+ip add 192.168.100.254 255.255.255.0
+no shutdown
+```
+hacer ping a una direccion
+```
+en
+config t
+do ping 192.168.100.3
+```
+
+### Si se desea conectar 2 o mas switches entre si, se le asigan ipv4 a cada uno con distintas redes mediante los comandos anteriores
+
+## Seguridad basica
+- Contraseña de acceso a la consola: Cisco
+- Contraseña de acceso a modo privilegiado: Class
+- Bloqueo de todas las contraseñas.
+```
+en
+config t
+enable password Cisco
+service password-encryption
+line con 0
+password Class
+login
+```
+# Ruteo
+
+## Default-Gateway
+IP de R1: 192.168.100.254
+SW CLI:
+```
+en
+config t
+ip default-gateway 192.168.100.254
+```
+
+## Asignacion de direcciones ip a routers con diferentes redes
+- R1:
+	- Gi1 192.168.100.0/24
+	- Gi2 148.208.144.0/23
+	- Se0 10.0.0.1/30
+- R2:
+	- Gi1 172.16.100.0/24
+	- Gi2 200.34.128.0/24
+	- Se0 10.0.0.2/30
+---
+Agregar una ruta específica a la tabla de enrutamiento del dispositivo
+R1 CLI:
+```
+en
+config t
+ip route 172.16.100.0 255.255.255.0 10.0.0.2
+ip route 200.34.128.0 255.255.255.0 10.0.0.2
+```
+R2 CLI:
+```
+en
+config t
+ip route 192.168.100.0 255.255.255.0 10.0.0.1
+ip route 148.208.144.0 255.255.254.0 10.0.0.1
+```
+### configurar una ruta estática predeterminada
+forma de localizar dispositivos sin espesificar su ruta
+R1 CLI:
+```
+en
+config t
+ip route 0.0.0.0 0.0.0.0 10.0.0.2
+```
+R2 CLI:
+```
+en
+config t
+ip route 0.0.0.0 0.0.0.0 10.0.0.1
+```
+
+
+
+
