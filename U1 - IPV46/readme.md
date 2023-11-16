@@ -37,20 +37,7 @@ do ping 192.168.100.3
 
 ### Si se desea conectar 2 o mas switches entre si, se le asigan ipv4 a cada uno con distintas redes mediante los comandos anteriores
 
-## Seguridad basica
-- Contraseña de acceso a la consola: Cisco
-- Contraseña de acceso a modo privilegiado: Class
-- Bloqueo de todas las contraseñas.
-```
-en
-config t
-enable password Cisco
-service password-encryption
-line con 0
-password Class
-login
-```
-## Ruteo
+# Ruteo
 Configurar el reloj si da error
 ```
 clock rate 2000000
@@ -73,7 +60,7 @@ ip default-gateway 192.168.100.254
 	- Gi1 172.16.100.0/24
 	- Gi2 200.34.128.0/24
 	- Se0 10.0.0.2/30
----
+
 Agregar una ruta específica a la tabla de enrutamiento del dispositivo 
 - R1 CLI:
 ```
@@ -128,7 +115,7 @@ no shut
 - Se pueden asigar redes IPv4 e IPv6 a una interfaz al mismo tiempo
 
 ## Ruteo IPv6
- R1:
+- R1:
 	- Gi0 2001:DB8:1:1::1/64
 	- Gi0 FE80::1 link-local
 	- Se0 2001:DB8:1:A001::1/64
@@ -138,7 +125,9 @@ no shut
 	- Gi0 FE80::1 link-local
 	- Se0 2001:DB8:1:A001::1/64
 	- Se0 FE80::1 link-local
---- 
+
+Asignacion de ruteo IPv6
+
 - R1 CLI:
 ```
 en
@@ -165,7 +154,7 @@ config t
 ipv6 route ::/0 2001:DB8:1:A001::1
 ```
 ---
-## Ruteo dinámico IPv4-6
+# Ruteo dinámico IPv4-6
 configuración del protocolo de enrutamiento RIP (Routing Information Protocol)
 ```
 en
