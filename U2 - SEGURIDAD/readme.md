@@ -31,6 +31,7 @@ username admin priv 15 secret cisco *
 ```
 - Tambien se puede usar `username admin priv 15 secret cisco`. El nivel de privilegio 15 es el nivel máximo de privilegios en un dispositivo Cisco (modo privilegiado o enable mode). `username admin secret cisco` por defecto, el nivel de privilegio será 1, que es un nivel de privilegio estándar sin acceso completo al modo privilegiado 
 - Al ingresar `generate rsa` te pide cuantos bits irán en el módulo, defaul 512, generalmente usamos 1024
+- `ip domain-name cisco.com` solo afecta al dispositivo y no tiene nada que ver con `domain-name` de una configuracion DHCP `pool`
 
 ```
 en
@@ -41,6 +42,7 @@ login local
 exit
 ip ssh version 2
 ```
+- `line vty 0 15` configurar las líneas virtuales de tipo terminal (vty), del 0 al 15
 - `transport input ssh` deshabilita el acceso Telnet y solo permite conexiones SSH
 - `login local` la autenticación se realizará mediante la base de datos de usuarios locales configurada en el dispositivo
 - `ip ssh version 2` usa la versión 2 del protocolo SSH. SSHv2 es más seguro
