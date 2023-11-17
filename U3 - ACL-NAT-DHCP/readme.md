@@ -78,6 +78,7 @@ int gi0/0
 ip access-g ejemplo1 out
 ```
 
+---
 # DHCP
 
 ### Exclusion de direcciones
@@ -112,7 +113,37 @@ end
 - `dns-server 192.168.11.5` dirección IP del servidor DNS que se proporcionará a los dispositivos clientes DHCP, si no hay se omite poner
 - `domain-name ejemplo.com` nombre de dominio que se asignará a los dispositivos clientes DHCP, no confundir con `ip domain-name` en la configuracion de terminal del dispositivo
 
+### Si existe particiones VLAN en el router
 
+```
+int gi0/0/0.20
+encap dot1q 20
+ip add 200.34.128.254 255.255.255.0
+```
+se crea un pool por cada vlan (ej. de la 20)
 
+```
+ip dhcp pool VLAN20
+network 200.34.128.0 255.255.255.0
+default-router 200.34.128.254
+domain-n vlan20.com
+```
+- no olvidar asignar una ip a la interfaz sin particion vlan jusnto con el SW para que se comuniquen en red
+
+### Router como cliente DHCP
+
+```
+int gi0/1
+ip address dhcp
+no sh
+```
+- `ip address dhcp` para obtener su dirección IP automáticamente del servidor DHCP
+
+### IP helper
+
+```
+int gi0/1
+ip helper-address 10.1.1.2
+``` 
 
 
