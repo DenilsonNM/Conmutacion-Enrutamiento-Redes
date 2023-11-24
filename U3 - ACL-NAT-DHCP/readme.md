@@ -81,6 +81,9 @@ ip access-g ejemplo1 out
 ---
 # DHCP
 
+- Dynamic Host Configuration Protocol
+- Para asignar direcciones IP y otros parámetros de configuración de red de forma dinámica a dispositivos en una red
+
 ### Exclusion de direcciones
 
 ```
@@ -150,7 +153,7 @@ sh ip int gi0/1
 ```
 - `ip address dhcp` para obtener su dirección IP automáticamente del servidor DHCP
 
-## DHCP IPv6
+# DHCP IPv6
 
 ### DHCPv6 SLAAC
 
@@ -225,6 +228,10 @@ sh ipv6 dhcp int gi0/0
 ---
 # NAT
 
+- Network Address Translation
+- para redes donde cada dispositivo interno necesita tener su propia dirección IP pública
+- Puede asignar una dirección IP pública a cada dispositivo interno
+
 ## NAT statica
 
 ![](/images/natstatic.png)
@@ -272,7 +279,12 @@ sh ip nat trans verbose
 - `ip nat inside source-list 1 pool NAT-POOL1` aplica la traducción NAT utilizando la lista de acceso 1 y en "NAT-POOL1"
 - `sh ip nat trans` ver las traducciones NAT configuradas. La versión `verbose` proporciona detalles adicionales
 
+---
 # PAT
+
+- Port Address Translation
+- Utiliza números de puerto para diferenciar las conexiones
+- Utiliza una única dirección IP pública compartida por todos los dispositivos internos
 
 ![](/images/pat.png)
 
@@ -288,5 +300,7 @@ ip nat outside
 exit
 sh ip nat trans
 ```
+- `ip nat inside source list 1 pool NAT-POOL2 overload
+` La opción `overload` indica que se está utilizando la técnica de NAT de sobrecarga (PAT)
 
 
