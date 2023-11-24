@@ -250,8 +250,9 @@ show ip nat translations
 
 ## NAT dinamica
 
-redes publicas: 148.208.144.1-5
-red privada: 192.108.0.0/24
+Redes publicas: 148.208.144.1-5
+
+Red privada: 192.108.0.0/24
 
 ```
 ip nat pool NAT-POOL1 148.208.144.1 148.208.144.5
@@ -270,5 +271,22 @@ sh ip nat trans verbose
 - `access-list 1 permit 192.108.0.0...` crea una lista de acceso (ACL) llamada "1" que permite el tráfico desde la red 192.108.0.0/16
 - `ip nat inside source-list 1 pool NAT-POOL1` aplica la traducción NAT utilizando la lista de acceso 1 y en "NAT-POOL1"
 - `sh ip nat trans` ver las traducciones NAT configuradas. La versión `verbose` proporciona detalles adicionales
+
+# PAT
+
+![](/images/pat.png)
+
+```
+ip nat pool NAT-POOL2 209.165.200.226 209.165.200.39 netmask 255.255.255.224
+acc-l 1 permit 192.168.0.0 0.0.255.255
+ip nat ins sou-l 1 pool NAT-POOL2 overload
+exit
+int se0/0/0
+ip nat inside 
+int se0/1/0
+ip nat outside
+exit
+sh ip nat trans
+```
 
 
