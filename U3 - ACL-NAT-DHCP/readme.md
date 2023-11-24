@@ -130,20 +130,120 @@ domain-n vlan20.com
 ```
 - no olvidar asignar una ip a la interfaz sin particion vlan jusnto con el SW para que se comuniquen en red
 
-### Router como cliente DHCP
-
-```
-int gi0/1
-ip address dhcp
-no sh
-```
-- `ip address dhcp` para obtener su dirección IP automáticamente del servidor DHCP
-
 ### IP helper
 
 ```
 int gi0/1
 ip helper-address 10.1.1.2
 ``` 
+
+### Router como cliente DHCP
+
+```
+hostname SOHO
+int gi0/1
+ip address dhcp
+no sh
+```
+```
+sh ip int gi0/1
+```
+- `ip address dhcp` para obtener su dirección IP automáticamente del servidor DHCP
+
+## DHCP IPv6
+
+### DHCPv6 SLAAC
+
+```
+no ipv6 nd managed-config-flag
+no ipv6 nd other-config-flag
+```
+El mensaje RA contiene toda la Información de direccionamiento que necesito. No se encuentra disponible ninguna otra información de un servidor de DHCPv6.
+
+### DHCPv6 sin estado
+
+```
+ipv6 nd other-config-flag
+```
+El mensaje RA tiene parte de la información de direccionamiento, pero debo comunicarme con un servidor de DHCPv6 para obtener el resto de la información. como las DNS.
+
+```
+ipv6 unicast-routing
+ipv6 dhcp pool Pool-Ejemplo
+dns-server 2001:db8:acad:cafe::ff
+domain-name dominioipv6.com
+exit
+int gi0/1
+ipv6 dhcp server Pool-Ejemplo
+ipv6 nd other-config-flag
+```
+
+### Cliente DHCPv6 sin estado
+
+```
+int gi0/1
+ipv6 enable
+ipv6 address autoconfig
+```
+
+### DHCPv6 con estado
+
+```
+ipv6 nd managed-config-flag
+```
+El mensaje RA dice que debo comunicarme con un servidor de DHCPv6 para obtener toda la información direccionamiento.
+
+```
+ipv6 unicast-routing
+ipv6 dhcp pool Pool-Ejemplo2
+address prefix 2001:db8:acad:cafe:1::/64
+dns-server 2001:db8:acad:cafe:aaa::5
+domain-name dominioipv6.com
+exit
+int gi0/1
+ip add 2001:db8:acad:cafe:1::1/64
+ipv6 dhcp server Pool-Ejemplo2
+ipv6 nd managed-config-flag
+```
+### Cliente DHCPv6 con estado
+
+```
+int gi0/1
+ipv6 enable
+ipv6 address dhcp
+```
+
+### Agente de retransmision DHCPv6
+
+```
+int gi0/0
+ipv6 dhcp relay destination 2001:db8:acad:cafe:1::6
+end
+sh ipv6 dhcp int gi0/0
+```
+
+---
+# NAT
+
+## NAT statica
+
+![](/images/natstatic.png)
+
+R2:
+
+```
+en
+conf t
+ip nat inside source static 192.168.10.254 209.165.201.5
+int se0/0/0
+ip add 192.168.1.2 255.255.255.252
+ip nat inside
+exit
+int se0/1/0
+ip add 209.165.200.1 255.255.255.252
+ip nat outside
+show ip nat translations
+```
+
 
 
