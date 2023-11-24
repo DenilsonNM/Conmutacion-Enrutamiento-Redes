@@ -244,6 +244,31 @@ ip add 209.165.200.1 255.255.255.252
 ip nat outside
 show ip nat translations
 ```
+- `ip nat inside source static 192.168.10.254 209.165.201.5` establece una traducción estática de una dirección interna (192.168.10.254) a una dirección externa (209.165.201.5)
+- `ip nat inside` Marca esta interfaz como "dentro" para NAT
+- `ip nat outside` Marca esta interfaz como "fuera" para NAT
 
+## NAT dinamica
+
+redes publicas: 148.208.144.1-5
+red privada: 192.108.0.0/24
+
+```
+ip nat pool NAT-POOL1 148.208.144.1 148.208.144.5
+access-list 1 permit 192.108.0.0 0.0.255.255
+ip nat inside source-list 1 pool NAT-POOL1
+exit
+int gi0/0
+ip nat inside 
+int gi0/1
+ip nat outside
+exit
+sh ip nat trans verbose
+```
+- `ip nat pool NAT-POOL1...` crea un conjunto de pools NAT con un rango de direcciones públicas del 148.208.144.1 al 148.208.144.5
+- se puede poner un `netmask` para delimitar el rango tambien de las direcciones publicas a usar
+- `access-list 1 permit 192.108.0.0...` crea una lista de acceso (ACL) llamada "1" que permite el tráfico desde la red 192.108.0.0/16
+- `ip nat inside source-list 1 pool NAT-POOL1` aplica la traducción NAT utilizando la lista de acceso 1 y en "NAT-POOL1"
+- `sh ip nat trans` ver las traducciones NAT configuradas. La versión `verbose` proporciona detalles adicionales
 
 
