@@ -206,7 +206,6 @@ exit
 int gi0/1
 ip add 2001:db8:acad:cafe:1::1/64
 ipv6 dhcp server Pool-Ejemplo2
-ipv6 nd managed-config-flag
 ```
 ### Cliente DHCPv6 con estado
 
