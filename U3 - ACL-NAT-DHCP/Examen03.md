@@ -41,6 +41,7 @@ ipv6 route ::/0 2020:DB8:ACAD:1::1
 ip route 0.0.0.0 0.0.0.0 30.10.0.1
 ```
 -------------------------------------
+# SW-IPv6 --> RT-IPv6 --> MATRIZ
 
 ![](/images/examen1.png)
 
@@ -92,6 +93,7 @@ no sh
 ```
 
 -------------------------------------
+# SW-IPv46 --> RT-IPv46 --> MATRIZ
 
 ![](/images/examen2.png)
 
@@ -177,6 +179,7 @@ int range gi0/1-2
 sw mo tr
 ```
 -------------------------------------
+# SW-IPv4R --> RT-IPv4 --> MATRIZ
 
 ![](/images/examen3.png)
 
@@ -248,6 +251,7 @@ int range gi0/1-2
 sw mo tr
 ```
 -------------------------------------
+# ISP --> MATRIZ
 
 ![](/images/examen4.png)
 
@@ -257,11 +261,3 @@ sw mo tr
 ip route 0.0.0.0 0.0.0.0 200.34.128.2
 ipv6 route ::/0 2000:acad:cafe:F::2
 ```
-
-
-
-
-
-
-
-
