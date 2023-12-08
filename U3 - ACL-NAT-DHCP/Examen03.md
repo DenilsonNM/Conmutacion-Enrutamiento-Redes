@@ -12,22 +12,27 @@ int se0/0/0
 ip add 10.10.0.2 255.255.255.252
 ipv6 add 2010:DB8:ACAD:1::2/64
 ipv6 add fe80::1 link-local
+no sh
+ip nat inside
 
 int gi0/1
 ip add 200.34.128.2 255.255.255.252
 ipv6 add 2000:acad:cafe:F::1/127
 ipv6 address FE80::1 link-local
 no sh
+ip nat outside
 
 int gi0/0
 ip add 20.10.0.2 255.255.255.252
 ipv6 add 2020:DB8:ACAD:1::2/64
 ipv6 add fe80::1 link-local
 no sh
+ip nat inside
 
 int gi0/1/0
 ip add 30.10.0.2 255.255.255.252
 no sh
+ip nat inside
 
 ip route 0.0.0.0 0.0.0.0 10.10.0.1
 ipv6 route ::/0 2010:DB8:ACAD:1::1
@@ -39,6 +44,22 @@ ip route 0.0.0.0 0.0.0.0 20.10.0.1
 ipv6 route ::/0 2020:DB8:ACAD:1::1
 
 ip route 0.0.0.0 0.0.0.0 30.10.0.1
+
+ip nat inside source static 192.168.250.1 148.208.144.22
+ip nat inside source static 200.34.128.2 148.208.144.21
+
+ip nat pool NAT-POOL 148.208.144.17 148.208.144.20 netmask 255.255.255.248
+access-list 1 permit 192.168.0.0 0.0.0.255
+access-list 1 permit 200.34.0.0 0.0.0.255
+ip nat inside source list 1 pool NAT-POOL overload
+
+
+enable secret Class
+line con 0
+password Cisco
+login
+banner motd .
+Solo acceso autorizado.
 ```
 -------------------------------------
 # NORTE
@@ -74,6 +95,19 @@ domain-name norte.com
 
 ip route 0.0.0.0 0.0.0.0 10.10.0.2
 ipv6 route ::/0 2010:DB8:ACAD:1::2
+
+
+enable secret Class
+line con 0
+password Cisco
+login
+ip domain-name Norte.com
+crypto key generate rsa
+username administrador privilege 15 secret norteadm
+line vty 0 15
+transport input ssh
+login local
+ip ssh version 2
 ```
 
 ## SW-IPv6
@@ -90,6 +124,17 @@ int gi0/1-2
 sw mo tr
 no sh
 
+enable secret Class
+line con 0
+password Cisco
+login
+ip domain-name Norte.com
+crypto key generate rsa
+username administrador privilege 15 secret norteadm
+line vty 0 15
+transport input ssh
+login local
+ip ssh version 2
 ```
 
 -------------------------------------
@@ -149,6 +194,17 @@ domain-name centro.com
 ip route 0.0.0.0 0.0.0.0 20.10.0.2
 ipv6 route ::/0 2020:DB8:ACAD:1::2
 
+enable secret Class
+line con 0
+password Cisco
+login
+ip domain-name Centro.com
+crypto key generate rsa
+username administrador privilege 15 secret centroadm
+line vty 0 15
+transport input ssh
+login local
+ip ssh version 2
 ```
 
 ## SW-IPv46
@@ -172,11 +228,25 @@ name Empleados
 int range fa0/6-10
 sw mo acc
 sw acc vlan 20
+
 int range fa0/11-24
 sh
 
 int range gi0/1-2
 sw mo tr
+
+
+enable secret Class
+line con 0
+password Cisco
+login
+ip domain-name Centro.com
+crypto key generate rsa
+username administrador privilege 15 secret centroadm
+line vty 0 15
+transport input ssh
+login local
+ip ssh version 2
 ```
 -------------------------------------
 # SUR
@@ -222,6 +292,18 @@ dns-server 200.23.57.1
 domain-name sur.com
 
 ip route 0.0.0.0 0.0.0.0 30.10.0.2
+
+enable secret Class
+line con 0
+password Cisco
+login
+ip domain-name Sur.com
+crypto key generate rsa
+username administrador privilege 15 secret suradm
+line vty 0 15
+transport input ssh
+login local
+ip ssh version 2
 ```
 ## SW-IPv4
 
@@ -244,11 +326,24 @@ name Compras
 int range fa0/6-10
 sw mo acc
 sw acc vlan 20
+
 int range fa0/11-24
 sh
 
 int range gi0/1-2
 sw mo tr
+
+enable secret Class
+line con 0
+password Cisco
+login
+ip domain-name Sur.com
+crypto key generate rsa
+username administrador privilege 15 secret suradm
+line vty 0 15
+transport input ssh
+login local
+ip ssh version 2
 ```
 -------------------------------------
 # ISP --> MATRIZ
@@ -260,8 +355,11 @@ sw mo tr
 ```
 int gi0/0/0
 ipv6 address 2000:ACAD:CAFE:F::/127
-ip route 0.0.0.0 0.0.0.0 200.34.128.2
-sh
+no sh
 
+ip route 0.0.0.0 0.0.0.0 200.34.128.2
 ipv6 route ::/0 2000:acad:cafe:F::1
+
+ip route 148.208.144.16 255.255.255.248 200.34.128.2
+ip route 0.0.0.0 0.0.0.0 gi0/0/0
 ```
