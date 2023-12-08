@@ -15,7 +15,7 @@ ipv6 add fe80::1 link-local
 
 int gi0/1
 ip add 200.34.128.2 255.255.255.252
-ipv6 add 2000:acad:cafe:F::2/127
+ipv6 add 2000:acad:cafe:F::1/127
 ipv6 address FE80::1 link-local
 no sh
 
@@ -33,7 +33,7 @@ ip route 0.0.0.0 0.0.0.0 10.10.0.1
 ipv6 route ::/0 2010:DB8:ACAD:1::1
 
 ip route 0.0.0.0 0.0.0.0 200.34.128.1
-ipv6 route ::/0 2000:acad:cafe:F:: para ISP
+ipv6 route ::/0 2000:acad:cafe:F::
 
 ip route 0.0.0.0 0.0.0.0 20.10.0.1
 ipv6 route ::/0 2020:DB8:ACAD:1::1
@@ -41,7 +41,7 @@ ipv6 route ::/0 2020:DB8:ACAD:1::1
 ip route 0.0.0.0 0.0.0.0 30.10.0.1
 ```
 -------------------------------------
-# SW-IPv6 --> RT-IPv6 --> MATRIZ
+# NORTE
 
 ![](/images/examen1.png)
 
@@ -69,7 +69,7 @@ no sh
 
 ipv6 dhcp pool NORTE
 add pref 2010:DB8:ACAD:2::/64
-dns-server 2000:db8:acad:fe0::1
+dns-server 2000:DB8:ACAD:FE0::1
 domain-name norte.com
 
 ip route 0.0.0.0 0.0.0.0 10.10.0.2
@@ -93,7 +93,7 @@ no sh
 ```
 
 -------------------------------------
-# SW-IPv46 --> RT-IPv46 --> MATRIZ
+# CENTRO
 
 ![](/images/examen2.png)
 
@@ -179,7 +179,7 @@ int range gi0/1-2
 sw mo tr
 ```
 -------------------------------------
-# SW-IPv4R --> RT-IPv4 --> MATRIZ
+# SUR
 
 ![](/images/examen3.png)
 
@@ -258,6 +258,10 @@ sw mo tr
 ## ISP
 
 ```
+int gi0/0/0
+ipv6 address 2000:ACAD:CAFE:F::/127
 ip route 0.0.0.0 0.0.0.0 200.34.128.2
-ipv6 route ::/0 2000:acad:cafe:F::2
+sh
+
+ipv6 route ::/0 2000:acad:cafe:F::1
 ```
