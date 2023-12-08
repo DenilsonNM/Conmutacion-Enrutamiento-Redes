@@ -46,11 +46,17 @@ ipv6 route ::/0 2020:DB8:ACAD:1::1
 ip route 0.0.0.0 0.0.0.0 30.10.0.1
 
 ip nat inside source static 192.168.250.1 148.208.144.22
-ip nat inside source static 200.34.128.2 148.208.144.21
+ip nat inside source static 200.34.128.2 148.208.144.21 ***
 
-ip nat pool NAT-POOL 148.208.144.17 148.208.144.20 netmask 255.255.255.248
-access-list 1 permit 192.168.0.0 0.0.0.255
-access-list 1 permit 200.34.0.0 0.0.0.255
+ip nat pool NAT-POOL 148.208.144.17 148.208.144.21 netmask 255.255.255.248
+ip nat pool NAT-POOL 148.208.144.17 148.208.144.20 netmask 255.255.255.248 ***
+
+access-list 1 permit 192.168.100.0 0.0.0.255
+access-list 1 permit 192.168.150.0 0.0.0.255
+access-list 1 permit 192.168.200.0 0.0.0.255
+access-list 1 permit 192.168.250.0 0.0.0.255
+access-list 1 permit 200.34.128.0 0.0.0.3
+
 ip nat inside source list 1 pool NAT-POOL overload
 
 
@@ -120,7 +126,7 @@ int vlan 1
 ip add 10.0.0.1 255.255.255.252
 no sh
 
-int gi0/1-2
+int range gi0/1-2
 sw mo tr
 no sh
 
